@@ -1,23 +1,46 @@
 .app {
-  max-width: 1000px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 32px 20px 80px;
+  padding: 48px 20px 80px;
 }
 
 .app__header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.app__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--brand-1) 60%, transparent);
+  font-size: 24px;
 }
 
 .app__header h1 {
-  font-size: 32px;
+  font-size: 34px;
   margin: 0;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .app__subtitle {
   color: var(--text-secondary);
-  margin-top: 4px;
+  margin-top: 0;
+  font-size: 15px;
 }
 
 .app__main {
@@ -35,8 +58,9 @@
   align-items: end;
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: var(--shadow-card);
 }
 
 .transaction-form__field {
@@ -64,21 +88,32 @@
   border-radius: 8px;
   background: var(--page);
   color: var(--text-primary);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.transaction-form__field input:focus,
+.transaction-form__field select:focus {
+  outline: none;
+  border-color: var(--brand-1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-1) 18%, transparent);
 }
 
 .transaction-form__submit {
-  padding: 10px 20px;
+  padding: 10px 22px;
   border: none;
   border-radius: 8px;
-  background: var(--series-1);
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
   color: #ffffff;
   font-weight: 600;
   cursor: pointer;
   height: 40px;
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--brand-1) 55%, transparent);
+  transition: filter 0.15s ease, transform 0.1s ease;
 }
 
 .transaction-form__submit:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 /* Filter row */
@@ -100,6 +135,7 @@
   border-radius: 8px;
   background: var(--surface-1);
   color: var(--text-primary);
+  box-shadow: var(--shadow-card);
 }
 
 /* Stat tiles */
@@ -113,11 +149,18 @@
 .stat-tile {
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px 20px;
+  border-radius: 14px;
+  padding: 20px 22px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.stat-tile:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
 }
 
 .stat-tile__label {
@@ -164,9 +207,10 @@
 .chart-card {
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 20px;
   position: relative;
+  box-shadow: var(--shadow-card);
 }
 
 .chart-card__title {
@@ -364,9 +408,10 @@
 .transaction-list {
   background: var(--surface-1);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 8px 20px;
   overflow-x: auto;
+  box-shadow: var(--shadow-card);
 }
 
 .transaction-list__empty {
@@ -400,6 +445,15 @@
   color: var(--text-primary);
 }
 
+.transaction-list__table tbody tr:hover td {
+  background: color-mix(in srgb, var(--brand-1) 4%, transparent);
+}
+
+.transaction-list__row--editing td {
+  background: color-mix(in srgb, var(--brand-1) 6%, transparent);
+  vertical-align: middle;
+}
+
 .transaction-list__date {
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
@@ -420,15 +474,90 @@
   color: var(--critical);
 }
 
-.transaction-list__delete {
+.transaction-list__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.transaction-list__edit,
+.transaction-list__delete,
+.transaction-list__save,
+.transaction-list__cancel {
   background: none;
   border: none;
-  color: var(--text-muted);
   cursor: pointer;
   font-size: 13px;
-  padding: 4px 8px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.transaction-list__edit {
+  color: var(--text-muted);
+}
+
+.transaction-list__edit:hover {
+  color: var(--brand-1);
+  background: color-mix(in srgb, var(--brand-1) 10%, transparent);
+}
+
+.transaction-list__delete {
+  color: var(--text-muted);
 }
 
 .transaction-list__delete:hover {
   color: var(--critical);
+  background: color-mix(in srgb, var(--critical) 10%, transparent);
+}
+
+.transaction-list__save {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  font-weight: 600;
+}
+
+.transaction-list__save:hover {
+  filter: brightness(1.06);
+}
+
+.transaction-list__cancel {
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.transaction-list__cancel:hover {
+  background: var(--page);
+}
+
+/* Inline edit inputs */
+
+.transaction-list__edit-input {
+  width: 100%;
+  padding: 7px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface-1);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+}
+
+.transaction-list__edit-input:focus {
+  outline: none;
+  border-color: var(--brand-1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-1) 18%, transparent);
+}
+
+.transaction-list__edit-input--amount {
+  text-align: right;
+  min-width: 90px;
+}
+
+.transaction-list__edit-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 130px;
 }

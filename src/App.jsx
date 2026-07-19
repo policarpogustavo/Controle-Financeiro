@@ -47,9 +47,16 @@ export default function App() {
     saveTransactions(next)
   }
 
+  function updateTransaction(id, updates) {
+    const next = transactions.map((t) => (t.id === id ? { ...t, ...updates } : t))
+    setTransactions(next)
+    saveTransactions(next)
+  }
+
   return (
     <div className="app">
       <header className="app__header">
+        <span className="app__logo" aria-hidden="true">💰</span>
         <h1>Meu Dinheiro</h1>
         <p className="app__subtitle">Controle financeiro pessoal</p>
       </header>
@@ -76,7 +83,7 @@ export default function App() {
           <MonthlyChart transactions={transactions} />
         </div>
 
-        <TransactionList transactions={filtered} onDelete={deleteTransaction} />
+        <TransactionList transactions={filtered} onDelete={deleteTransaction} onUpdate={updateTransaction} />
       </main>
     </div>
   )
