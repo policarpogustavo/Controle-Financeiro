@@ -6,6 +6,7 @@ import CategoryChart from './components/CategoryChart'
 import MonthlyChart from './components/MonthlyChart'
 import { loadTransactions, saveTransactions } from './utils/storage'
 import { applyTheme, getStoredTheme, setStoredTheme, systemPrefersDark } from './utils/theme'
+import { exportTransactionsToCsv } from './utils/exportCsv'
 import './App.css'
 
 function monthKey(date) {
@@ -78,11 +79,25 @@ export default function App() {
           aria-label={theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
           title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}
         >
-          {theme === 'dark' ? '☀️' : '🌙'}
+          {theme === 'dark' ? (
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <circle cx="12" cy="12" r="4.5" />
+              <path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20.5 14.7A8.4 8.4 0 1 1 9.3 3.5a6.8 6.8 0 0 0 11.2 11.2Z" />
+            </svg>
+          )}
         </button>
-        <span className="app__logo" aria-hidden="true">💰</span>
-        <h1>Meu Dinheiro</h1>
-        <p className="app__subtitle">Controle financeiro pessoal</p>
+        <span className="app__logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 19V10M11 19V5M18 19v-6" />
+            <path d="M3 19h18" />
+          </svg>
+        </span>
+        <h1>Painel Financeiro</h1>
+        <p className="app__subtitle">Gestão financeira com visão executiva</p>
       </header>
 
       <main className="app__main">
@@ -98,6 +113,19 @@ export default function App() {
               </option>
             ))}
           </select>
+
+          <button
+            type="button"
+            className="app__export-btn"
+            onClick={() => exportTransactionsToCsv(filtered)}
+            disabled={filtered.length === 0}
+          >
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 3v12M7 10l5 5 5-5" />
+              <path d="M4 19h16" />
+            </svg>
+            Exportar para Excel
+          </button>
         </div>
 
         <StatTiles saldo={saldo} receitas={receitas} despesas={despesas} />
