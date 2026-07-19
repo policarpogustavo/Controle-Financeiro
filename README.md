@@ -2,6 +2,8 @@
 
 Aplicação de controle financeiro pessoal construída em React (Vite) como peça de portfólio, explorando um stack diferente da versão em HTML/CSS/JS puro.
 
+🔗 **Demo:** https://policarpogustavo.github.io/Controle-Financeiro/
+
 ## Funcionalidades
 
 - Cadastro de receitas e despesas (descrição, valor, categoria, data)
