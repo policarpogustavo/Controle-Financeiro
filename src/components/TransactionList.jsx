@@ -12,7 +12,7 @@ function toEditForm(t) {
   }
 }
 
-export default function TransactionList({ transactions, onDelete, onUpdate }) {
+export default function TransactionList({ transactions, onDelete, onUpdate, hasAnyTransaction }) {
   const [editingId, setEditingId] = useState(null)
   const [editForm, setEditForm] = useState(null)
 
@@ -51,7 +51,11 @@ export default function TransactionList({ transactions, onDelete, onUpdate }) {
   return (
     <section className="transaction-list" aria-label="Lista de transações">
       {sorted.length === 0 ? (
-        <p className="transaction-list__empty">Nenhuma transação neste período.</p>
+        <p className="transaction-list__empty">
+          {hasAnyTransaction
+            ? 'Nenhuma transação neste período.'
+            : 'Nenhuma transação ainda. Adicione a primeira acima para começar a acompanhar suas finanças.'}
+        </p>
       ) : (
         <table className="transaction-list__table">
           <thead>

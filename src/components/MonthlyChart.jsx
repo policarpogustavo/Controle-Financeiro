@@ -39,7 +39,7 @@ export default function MonthlyChart({ transactions }) {
     return { year, month, label: monthLabel(year, month), receita, despesa }
   })
 
-  const maxVal = niceCeil(Math.max(...data.map((d) => Math.max(d.receita, d.despesa)), 1))
+  const maxVal = niceCeil(Math.max(...data.map((d) => Math.max(d.receita, d.despesa))))
   const plotWidth = PLOT.width - PLOT.padLeft - PLOT.padRight
   const plotHeight = PLOT.height - PLOT.padTop - PLOT.padBottom
   const bandWidth = plotWidth / data.length

@@ -1,19 +1,34 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import StatTiles from './components/StatTiles'
 import TransactionForm from './components/TransactionForm'
 import TransactionList from './components/TransactionList'
 import CategoryChart from './components/CategoryChart'
 import MonthlyChart from './components/MonthlyChart'
 import { loadTransactions, saveTransactions } from './utils/storage'
+import { applyTheme, getStoredTheme, setStoredTheme, systemPrefersDark } from './utils/theme'
 import './App.css'
 
 function monthKey(date) {
   return date.slice(0, 7)
 }
 
+function initialTheme() {
+  return getStoredTheme() ?? (systemPrefersDark() ? 'dark' : 'light')
+}
+
 export default function App() {
   const [transactions, setTransactions] = useState(loadTransactions)
   const [monthFilter, setMonthFilter] = useState('all')
+  const [theme, setTheme] = useState(initialTheme)
+
+  useEffect(() => {
+    applyTheme(theme)
+    setStoredTheme(theme)
+  }, [theme])
+
+  function toggleTheme() {
+    setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
+  }
 
   const availableMonths = useMemo(() => {
     const set = new Set(transactions.map((t) => monthKey(t.date)))
@@ -55,7 +70,16 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="app__header">
+      <header className="app__hero">
+        <button
+          type="button"
+          className="app__theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
+          title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}
+        >
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
         <span className="app__logo" aria-hidden="true">💰</span>
         <h1>Meu Dinheiro</h1>
         <p className="app__subtitle">Controle financeiro pessoal</p>
@@ -83,7 +107,12 @@ export default function App() {
           <MonthlyChart transactions={transactions} />
         </div>
 
-        <TransactionList transactions={filtered} onDelete={deleteTransaction} onUpdate={updateTransaction} />
+        <TransactionList
+          transactions={filtered}
+          onDelete={deleteTransaction}
+          onUpdate={updateTransaction}
+          hasAnyTransaction={transactions.length > 0}
+        />
       </main>
     </div>
   )

@@ -98,8 +98,10 @@ body {
   font-family: var(--sans);
   color: var(--text-primary);
   background:
-    radial-gradient(1100px 520px at 12% -10%, color-mix(in srgb, var(--brand-1) 16%, transparent), transparent 60%),
-    radial-gradient(900px 480px at 110% 0%, color-mix(in srgb, var(--brand-2) 14%, transparent), transparent 60%),
+    radial-gradient(1100px 520px at 12% -10%, color-mix(in srgb, var(--brand-1) 14%, transparent), transparent 60%),
+    radial-gradient(900px 480px at 110% 0%, color-mix(in srgb, var(--brand-2) 12%, transparent), transparent 60%),
+    radial-gradient(circle, color-mix(in srgb, var(--text-primary) 6%, transparent) 1px, transparent 1px)
+      0 0 / 22px 22px,
     var(--page);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;

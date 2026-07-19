@@ -1,16 +1,45 @@
 .app {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 48px 20px 80px;
+  padding: 28px 20px 80px;
 }
 
-.app__header {
+.app__hero {
   text-align: center;
-  margin-bottom: 40px;
+  margin: 0 0 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  padding: 44px 24px 52px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  box-shadow: 0 20px 44px -20px color-mix(in srgb, var(--brand-1) 60%, transparent);
+}
+
+.app__hero::before,
+.app__hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+.app__hero::before {
+  width: 280px;
+  height: 280px;
+  top: -140px;
+  right: -60px;
+}
+
+.app__hero::after {
+  width: 180px;
+  height: 180px;
+  bottom: -110px;
+  left: 8%;
 }
 
 .app__logo {
@@ -21,26 +50,52 @@
   height: 52px;
   border-radius: 16px;
   margin-bottom: 6px;
-  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
-  box-shadow: 0 8px 20px -8px color-mix(in srgb, var(--brand-1) 60%, transparent);
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
   font-size: 24px;
+  position: relative;
 }
 
-.app__header h1 {
+.app__hero h1 {
   font-size: 34px;
   margin: 0;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffffff;
+  position: relative;
 }
 
 .app__subtitle {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.85);
   margin-top: 0;
   font-size: 15px;
+  position: relative;
+}
+
+.app__theme-toggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+  z-index: 1;
+}
+
+.app__theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(1.05);
 }
 
 .app__main {
@@ -560,4 +615,125 @@
   flex-direction: column;
   gap: 4px;
   min-width: 130px;
+}
+
+/* Mobile */
+
+@media (max-width: 640px) {
+  .app {
+    padding: 16px 12px 60px;
+  }
+
+  .app__hero {
+    padding: 36px 18px 40px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .app__hero h1 {
+    font-size: 26px;
+  }
+
+  .app__subtitle {
+    font-size: 13px;
+  }
+
+  .app__theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .app__main {
+    gap: 16px;
+  }
+
+  .transaction-form {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .transaction-form__field,
+  .transaction-form__field--grow {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .transaction-form__submit {
+    width: 100%;
+  }
+
+  .app__filter-row {
+    flex-wrap: wrap;
+  }
+
+  .app__filter-row select {
+    flex: 1;
+  }
+
+  .stat-tiles {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-tile {
+    padding: 14px 16px;
+  }
+
+  .stat-tile__value {
+    font-size: 21px;
+  }
+
+  .app__charts {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    padding: 16px;
+  }
+
+  .category-chart__row {
+    grid-template-columns: 76px 1fr;
+    gap: 6px;
+  }
+
+  .transaction-list {
+    padding: 4px 10px;
+    margin: 0 -12px;
+    width: calc(100% + 24px);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .transaction-list__table {
+    font-size: 13px;
+  }
+
+  .transaction-list__table th,
+  .transaction-list__table td {
+    padding: 8px 6px;
+  }
+
+  .transaction-list__table th:nth-child(3),
+  .transaction-list__table td:nth-child(3) {
+    max-width: 84px;
+  }
+
+  .transaction-list__table tr:not(.transaction-list__row--editing) td:nth-child(3) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .transaction-list__actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .transaction-list__edit-group {
+    min-width: 100px;
+  }
 }
