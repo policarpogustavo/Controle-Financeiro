@@ -6,7 +6,7 @@ import CategoryChart from './components/CategoryChart'
 import MonthlyChart from './components/MonthlyChart'
 import { loadTransactions, saveTransactions } from './utils/storage'
 import { applyTheme, getStoredTheme, setStoredTheme, systemPrefersDark } from './utils/theme'
-import { exportTransactionsToCsv } from './utils/exportCsv'
+import { exportTransactionsToExcel } from './utils/exportExcel'
 import './App.css'
 
 function monthKey(date) {
@@ -117,7 +117,7 @@ export default function App() {
           <button
             type="button"
             className="app__export-btn"
-            onClick={() => exportTransactionsToCsv(filtered)}
+            onClick={() => exportTransactionsToExcel(filtered)}
             disabled={filtered.length === 0}
           >
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
