@@ -7,7 +7,7 @@ export default function CategoryChart({ transactions }) {
 
   const totals = new Map()
   for (const t of transactions) {
-    if (t.type !== 'despesa') continue
+    if (t.type !== 'saida') continue
     totals.set(t.category, (totals.get(t.category) ?? 0) + t.amount)
   }
 
@@ -20,16 +20,16 @@ export default function CategoryChart({ transactions }) {
   if (rows.length === 0) {
     return (
       <div className="chart-card">
-        <h3 className="chart-card__title">Despesas por categoria</h3>
-        <p className="chart-card__empty">Sem despesas registradas ainda.</p>
+        <h3 className="chart-card__title">Saídas por categoria</h3>
+        <p className="chart-card__empty">Sem saídas registradas ainda.</p>
       </div>
     )
   }
 
   return (
     <div className="chart-card">
-      <h3 className="chart-card__title">Despesas por categoria</h3>
-      <div className="category-chart" role="img" aria-label="Gráfico de despesas por categoria">
+      <h3 className="chart-card__title">Saídas por categoria</h3>
+      <div className="category-chart" role="img" aria-label="Gráfico de saídas por categoria">
         {rows.map((row) => {
           const pct = (row.amount / max) * 100
           const isHovered = hovered === row.category

@@ -41,14 +41,14 @@ export default function App() {
     return transactions.filter((t) => monthKey(t.date) === monthFilter)
   }, [transactions, monthFilter])
 
-  const { saldo, receitas, despesas } = useMemo(() => {
-    let receitas = 0
-    let despesas = 0
+  const { saldo, entradas, saidas } = useMemo(() => {
+    let entradas = 0
+    let saidas = 0
     for (const t of filtered) {
-      if (t.type === 'receita') receitas += t.amount
-      else despesas += t.amount
+      if (t.type === 'entrada') entradas += t.amount
+      else saidas += t.amount
     }
-    return { saldo: receitas - despesas, receitas, despesas }
+    return { saldo: entradas - saidas, entradas, saidas }
   }, [filtered])
 
   function addTransaction(transaction) {
@@ -128,7 +128,7 @@ export default function App() {
           </button>
         </div>
 
-        <StatTiles saldo={saldo} receitas={receitas} despesas={despesas} />
+        <StatTiles saldo={saldo} entradas={entradas} saidas={saidas} />
 
         <div className="app__charts">
           <CategoryChart transactions={filtered} />

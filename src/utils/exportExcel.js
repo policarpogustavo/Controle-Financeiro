@@ -19,9 +19,9 @@ function thinBorder() {
 export async function exportTransactionsToExcel(transactions, filename = 'transacoes.xlsx') {
   const sorted = [...transactions].sort((a, b) => b.date.localeCompare(a.date))
 
-  const receitas = sorted.filter((t) => t.type === 'receita').reduce((sum, t) => sum + t.amount, 0)
-  const despesas = sorted.filter((t) => t.type === 'despesa').reduce((sum, t) => sum + t.amount, 0)
-  const saldo = receitas - despesas
+  const entradas = sorted.filter((t) => t.type === 'entrada').reduce((sum, t) => sum + t.amount, 0)
+  const saidas = sorted.filter((t) => t.type === 'saida').reduce((sum, t) => sum + t.amount, 0)
+  const saldo = entradas - saidas
 
   const workbook = new ExcelJS.Workbook()
   workbook.creator = 'Painel Financeiro'
@@ -81,8 +81,8 @@ export async function exportTransactionsToExcel(transactions, filename = 'transa
       date: formatDate(t.date),
       description: t.description,
       category: categoryLabel(t.category),
-      type: t.type === 'receita' ? 'Receita' : 'Despesa',
-      amount: t.type === 'receita' ? t.amount : -t.amount,
+      type: t.type === 'entrada' ? 'Entrada' : 'Saída',
+      amount: t.type === 'entrada' ? t.amount : -t.amount,
     })
 
     const isEven = index % 2 === 1
@@ -101,19 +101,19 @@ export async function exportTransactionsToExcel(transactions, filename = 'transa
       name: 'Calibri',
       size: 10.5,
       bold: true,
-      color: { argb: t.type === 'receita' ? GOOD : CRITICAL },
+      color: { argb: t.type === 'entrada' ? GOOD : CRITICAL },
     }
   })
 
   // Linha de totais
   sheet.addRow([])
-  const totalReceitasRow = sheet.addRow(['', '', '', 'Total Receitas', receitas])
-  const totalDespesasRow = sheet.addRow(['', '', '', 'Total Despesas', -despesas])
+  const totalEntradasRow = sheet.addRow(['', '', '', 'Total Entradas', entradas])
+  const totalSaidasRow = sheet.addRow(['', '', '', 'Total Saídas', -saidas])
   const saldoRow = sheet.addRow(['', '', '', 'Saldo', saldo])
 
   for (const [row, color] of [
-    [totalReceitasRow, GOOD],
-    [totalDespesasRow, CRITICAL],
+    [totalEntradasRow, GOOD],
+    [totalSaidasRow, CRITICAL],
     [saldoRow, saldo < 0 ? CRITICAL : BRAND_1],
   ]) {
     row.getCell(4).font = { name: 'Calibri', size: 11, bold: true }

@@ -1,6 +1,6 @@
 import { formatCurrency } from '../utils/format'
 
-export default function StatTiles({ saldo, receitas, despesas }) {
+export default function StatTiles({ saldo, entradas, saidas }) {
   return (
     <section className="stat-tiles" aria-label="Resumo financeiro">
       <div className="stat-tile">
@@ -12,16 +12,16 @@ export default function StatTiles({ saldo, receitas, despesas }) {
       <div className="stat-tile">
         <span className="stat-tile__label">
           <span className="stat-tile__dot stat-tile__dot--good" aria-hidden="true" />
-          Receitas
+          Entradas
         </span>
-        <span className="stat-tile__value">{formatCurrency(receitas)}</span>
+        <span className="stat-tile__value">{formatCurrency(entradas)}</span>
       </div>
       <div className="stat-tile">
         <span className="stat-tile__label">
           <span className="stat-tile__dot stat-tile__dot--critical" aria-hidden="true" />
-          Despesas
+          Saídas
         </span>
-        <span className="stat-tile__value">{formatCurrency(despesas)}</span>
+        <span className="stat-tile__value">{formatCurrency(saidas)}</span>
       </div>
     </section>
   )

@@ -6,7 +6,7 @@ const today = () => new Date().toISOString().slice(0, 10)
 const emptyForm = {
   description: '',
   amount: '',
-  type: 'despesa',
+  type: 'saida',
   category: 'outros',
   date: today(),
 }
@@ -68,8 +68,8 @@ export default function TransactionForm({ onAdd }) {
       <div className="transaction-form__field">
         <label htmlFor="type">Tipo</label>
         <select id="type" name="type" value={form.type} onChange={handleChange}>
-          <option value="despesa">Despesa</option>
-          <option value="receita">Receita</option>
+          <option value="saida">Saída</option>
+          <option value="entrada">Entrada</option>
         </select>
       </div>
 

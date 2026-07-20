@@ -27,19 +27,19 @@ export default function MonthlyChart({ transactions }) {
 
   const months = lastSixMonths()
   const data = months.map(({ year, month }) => {
-    let receita = 0
-    let despesa = 0
+    let entrada = 0
+    let saida = 0
     for (const t of transactions) {
       const d = new Date(t.date)
       if (d.getFullYear() === year && d.getMonth() === month) {
-        if (t.type === 'receita') receita += t.amount
-        else despesa += t.amount
+        if (t.type === 'entrada') entrada += t.amount
+        else saida += t.amount
       }
     }
-    return { year, month, label: monthLabel(year, month), receita, despesa }
+    return { year, month, label: monthLabel(year, month), entrada, saida }
   })
 
-  const maxVal = niceCeil(Math.max(...data.map((d) => Math.max(d.receita, d.despesa))))
+  const maxVal = niceCeil(Math.max(...data.map((d) => Math.max(d.entrada, d.saida))))
   const plotWidth = PLOT.width - PLOT.padLeft - PLOT.padRight
   const plotHeight = PLOT.height - PLOT.padTop - PLOT.padBottom
   const bandWidth = plotWidth / data.length
@@ -53,13 +53,13 @@ export default function MonthlyChart({ transactions }) {
 
   return (
     <div className="chart-card">
-      <h3 className="chart-card__title">Receitas x despesas por mês</h3>
+      <h3 className="chart-card__title">Entradas x saídas por mês</h3>
       <div className="monthly-chart">
         <svg
           viewBox={`0 0 ${PLOT.width} ${PLOT.height}`}
           className="monthly-chart__svg"
           role="img"
-          aria-label="Gráfico de receitas e despesas por mês"
+          aria-label="Gráfico de entradas e saídas por mês"
         >
           {yTicks.map((tick) => {
             const y = PLOT.padTop + plotHeight - barHeight(tick)
@@ -82,37 +82,37 @@ export default function MonthlyChart({ transactions }) {
           {data.map((d, i) => {
             const groupX = PLOT.padLeft + i * bandWidth + (bandWidth - groupWidth) / 2
             const baseY = PLOT.padTop + plotHeight
-            const receitaH = barHeight(d.receita)
-            const despesaH = barHeight(d.despesa)
-            const receitaKey = `${d.year}-${d.month}-receita`
-            const despesaKey = `${d.year}-${d.month}-despesa`
+            const entradaH = barHeight(d.entrada)
+            const saidaH = barHeight(d.saida)
+            const entradaKey = `${d.year}-${d.month}-entrada`
+            const saidaKey = `${d.year}-${d.month}-saida`
 
             return (
               <g key={`${d.year}-${d.month}`}>
                 <rect
                   x={groupX}
-                  y={baseY - receitaH}
+                  y={baseY - entradaH}
                   width={BAR_WIDTH}
-                  height={Math.max(receitaH, 1)}
+                  height={Math.max(entradaH, 1)}
                   rx={4}
-                  className={`monthly-chart__bar monthly-chart__bar--good ${hovered === receitaKey ? 'monthly-chart__bar--hover' : ''}`}
-                  onPointerEnter={() => setHovered(receitaKey)}
+                  className={`monthly-chart__bar monthly-chart__bar--good ${hovered === entradaKey ? 'monthly-chart__bar--hover' : ''}`}
+                  onPointerEnter={() => setHovered(entradaKey)}
                   onPointerLeave={() => setHovered(null)}
                   tabIndex={0}
-                  onFocus={() => setHovered(receitaKey)}
+                  onFocus={() => setHovered(entradaKey)}
                   onBlur={() => setHovered(null)}
                 />
                 <rect
                   x={groupX + BAR_WIDTH + BAR_GAP}
-                  y={baseY - despesaH}
+                  y={baseY - saidaH}
                   width={BAR_WIDTH}
-                  height={Math.max(despesaH, 1)}
+                  height={Math.max(saidaH, 1)}
                   rx={4}
-                  className={`monthly-chart__bar monthly-chart__bar--critical ${hovered === despesaKey ? 'monthly-chart__bar--hover' : ''}`}
-                  onPointerEnter={() => setHovered(despesaKey)}
+                  className={`monthly-chart__bar monthly-chart__bar--critical ${hovered === saidaKey ? 'monthly-chart__bar--hover' : ''}`}
+                  onPointerEnter={() => setHovered(saidaKey)}
                   onPointerLeave={() => setHovered(null)}
                   tabIndex={0}
-                  onFocus={() => setHovered(despesaKey)}
+                  onFocus={() => setHovered(saidaKey)}
                   onBlur={() => setHovered(null)}
                 />
 
@@ -125,21 +125,21 @@ export default function MonthlyChart({ transactions }) {
                   {d.label}
                 </text>
 
-                {hovered === receitaKey && (
-                  <foreignObject x={groupX - 40} y={baseY - receitaH - 46} width="120" height="40">
+                {hovered === entradaKey && (
+                  <foreignObject x={groupX - 40} y={baseY - entradaH - 46} width="120" height="40">
                     <div className="chart-tooltip chart-tooltip--floating">
                       <span className="chart-tooltip__key chart-tooltip__key--good" />
-                      <span className="chart-tooltip__value">{formatCurrency(d.receita)}</span>
-                      <span className="chart-tooltip__label">Receitas</span>
+                      <span className="chart-tooltip__value">{formatCurrency(d.entrada)}</span>
+                      <span className="chart-tooltip__label">Entradas</span>
                     </div>
                   </foreignObject>
                 )}
-                {hovered === despesaKey && (
-                  <foreignObject x={groupX - 20} y={baseY - despesaH - 46} width="120" height="40">
+                {hovered === saidaKey && (
+                  <foreignObject x={groupX - 20} y={baseY - saidaH - 46} width="120" height="40">
                     <div className="chart-tooltip chart-tooltip--floating">
                       <span className="chart-tooltip__key chart-tooltip__key--critical" />
-                      <span className="chart-tooltip__value">{formatCurrency(d.despesa)}</span>
-                      <span className="chart-tooltip__label">Despesas</span>
+                      <span className="chart-tooltip__value">{formatCurrency(d.saida)}</span>
+                      <span className="chart-tooltip__label">Saídas</span>
                     </div>
                   </foreignObject>
                 )}
@@ -151,11 +151,11 @@ export default function MonthlyChart({ transactions }) {
       <div className="chart-legend">
         <span className="chart-legend__item">
           <span className="chart-legend__swatch chart-legend__swatch--good" />
-          Receitas
+          Entradas
         </span>
         <span className="chart-legend__item">
           <span className="chart-legend__swatch chart-legend__swatch--critical" />
-          Despesas
+          Saídas
         </span>
       </div>
     </div>

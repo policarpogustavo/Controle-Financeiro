@@ -111,8 +111,8 @@ export default function TransactionList({ transactions, onDelete, onUpdate, hasA
                         onChange={handleEditChange}
                         className="transaction-list__edit-input"
                       >
-                        <option value="despesa">Despesa</option>
-                        <option value="receita">Receita</option>
+                        <option value="saida">Saída</option>
+                        <option value="entrada">Entrada</option>
                       </select>
                     </div>
                   </td>
@@ -146,10 +146,10 @@ export default function TransactionList({ transactions, onDelete, onUpdate, hasA
                   <td>{categoryLabel(t.category)}</td>
                   <td
                     className={`transaction-list__amount ${
-                      t.type === 'receita' ? 'transaction-list__amount--good' : 'transaction-list__amount--critical'
+                      t.type === 'entrada' ? 'transaction-list__amount--good' : 'transaction-list__amount--critical'
                     }`}
                   >
-                    {t.type === 'receita' ? '+' : '-'} {formatCurrency(t.amount)}
+                    {t.type === 'entrada' ? '+' : '-'} {formatCurrency(t.amount)}
                   </td>
                   <td>
                     <div className="transaction-list__actions">
