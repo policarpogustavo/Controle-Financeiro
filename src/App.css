@@ -162,33 +162,6 @@
   box-shadow: var(--shadow-card);
 }
 
-.app__export-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-left: auto;
-  padding: 8px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface-1);
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-card);
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.app__export-btn:hover:not(:disabled) {
-  color: var(--brand-2);
-  border-color: var(--brand-2);
-}
-
-.app__export-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
 /* Stat tiles */
 
 .stat-tiles {
@@ -673,12 +646,6 @@
 
   .app__filter-row select {
     flex: 1;
-  }
-
-  .app__export-btn {
-    margin-left: 0;
-    flex: 1 1 100%;
-    justify-content: center;
   }
 
   .stat-tiles {

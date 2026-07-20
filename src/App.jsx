@@ -6,7 +6,6 @@ import CategoryChart from './components/CategoryChart'
 import MonthlyChart from './components/MonthlyChart'
 import { loadTransactions, saveTransactions } from './utils/storage'
 import { applyTheme, getStoredTheme, setStoredTheme, systemPrefersDark } from './utils/theme'
-import { exportTransactionsToExcel } from './utils/exportExcel'
 import './App.css'
 
 function monthKey(date) {
@@ -113,19 +112,6 @@ export default function App() {
               </option>
             ))}
           </select>
-
-          <button
-            type="button"
-            className="app__export-btn"
-            onClick={() => exportTransactionsToExcel(filtered)}
-            disabled={filtered.length === 0}
-          >
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M12 3v12M7 10l5 5 5-5" />
-              <path d="M4 19h16" />
-            </svg>
-            Exportar para Excel
-          </button>
         </div>
 
         <StatTiles saldo={saldo} entradas={entradas} saidas={saidas} />
